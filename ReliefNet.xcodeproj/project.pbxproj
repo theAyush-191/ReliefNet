@@ -29,9 +29,89 @@
 		A93B1B202E88541100B5AA7D /* ReliefNetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReliefNetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A93B1BBF2E885E1400B5AA7D /* Exceptions for "ReliefNet" folder in "ReliefNet" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				"Resources/Cantata_One/CantataOne-Regular.ttf",
+				Resources/Cantata_One/OFL.txt,
+				"Resources/Inria_Serif/InriaSerif-Bold.ttf",
+				"Resources/Inria_Serif/InriaSerif-BoldItalic.ttf",
+				"Resources/Inria_Serif/InriaSerif-Italic.ttf",
+				"Resources/Inria_Serif/InriaSerif-Light.ttf",
+				"Resources/Inria_Serif/InriaSerif-LightItalic.ttf",
+				"Resources/Inria_Serif/InriaSerif-Regular.ttf",
+				Resources/Inria_Serif/OFL.txt,
+				"Resources/Inter/Inter-Italic-VariableFont_opsz,wght.ttf",
+				"Resources/Inter/Inter-VariableFont_opsz,wght.ttf",
+				Resources/Inter/OFL.txt,
+				Resources/Inter/README.txt,
+				"Resources/Inter/static/Inter_18pt-Black.ttf",
+				"Resources/Inter/static/Inter_18pt-BlackItalic.ttf",
+				"Resources/Inter/static/Inter_18pt-Bold.ttf",
+				"Resources/Inter/static/Inter_18pt-BoldItalic.ttf",
+				"Resources/Inter/static/Inter_18pt-ExtraBold.ttf",
+				"Resources/Inter/static/Inter_18pt-ExtraBoldItalic.ttf",
+				"Resources/Inter/static/Inter_18pt-ExtraLight.ttf",
+				"Resources/Inter/static/Inter_18pt-ExtraLightItalic.ttf",
+				"Resources/Inter/static/Inter_18pt-Italic.ttf",
+				"Resources/Inter/static/Inter_18pt-Light.ttf",
+				"Resources/Inter/static/Inter_18pt-LightItalic.ttf",
+				"Resources/Inter/static/Inter_18pt-Medium.ttf",
+				"Resources/Inter/static/Inter_18pt-MediumItalic.ttf",
+				"Resources/Inter/static/Inter_18pt-Regular.ttf",
+				"Resources/Inter/static/Inter_18pt-SemiBold.ttf",
+				"Resources/Inter/static/Inter_18pt-SemiBoldItalic.ttf",
+				"Resources/Inter/static/Inter_18pt-Thin.ttf",
+				"Resources/Inter/static/Inter_18pt-ThinItalic.ttf",
+				"Resources/Inter/static/Inter_24pt-Black.ttf",
+				"Resources/Inter/static/Inter_24pt-BlackItalic.ttf",
+				"Resources/Inter/static/Inter_24pt-Bold.ttf",
+				"Resources/Inter/static/Inter_24pt-BoldItalic.ttf",
+				"Resources/Inter/static/Inter_24pt-ExtraBold.ttf",
+				"Resources/Inter/static/Inter_24pt-ExtraBoldItalic.ttf",
+				"Resources/Inter/static/Inter_24pt-ExtraLight.ttf",
+				"Resources/Inter/static/Inter_24pt-ExtraLightItalic.ttf",
+				"Resources/Inter/static/Inter_24pt-Italic.ttf",
+				"Resources/Inter/static/Inter_24pt-Light.ttf",
+				"Resources/Inter/static/Inter_24pt-LightItalic.ttf",
+				"Resources/Inter/static/Inter_24pt-Medium.ttf",
+				"Resources/Inter/static/Inter_24pt-MediumItalic.ttf",
+				"Resources/Inter/static/Inter_24pt-Regular.ttf",
+				"Resources/Inter/static/Inter_24pt-SemiBold.ttf",
+				"Resources/Inter/static/Inter_24pt-SemiBoldItalic.ttf",
+				"Resources/Inter/static/Inter_24pt-Thin.ttf",
+				"Resources/Inter/static/Inter_24pt-ThinItalic.ttf",
+				"Resources/Inter/static/Inter_28pt-Black.ttf",
+				"Resources/Inter/static/Inter_28pt-BlackItalic.ttf",
+				"Resources/Inter/static/Inter_28pt-Bold.ttf",
+				"Resources/Inter/static/Inter_28pt-BoldItalic.ttf",
+				"Resources/Inter/static/Inter_28pt-ExtraBold.ttf",
+				"Resources/Inter/static/Inter_28pt-ExtraBoldItalic.ttf",
+				"Resources/Inter/static/Inter_28pt-ExtraLight.ttf",
+				"Resources/Inter/static/Inter_28pt-ExtraLightItalic.ttf",
+				"Resources/Inter/static/Inter_28pt-Italic.ttf",
+				"Resources/Inter/static/Inter_28pt-Light.ttf",
+				"Resources/Inter/static/Inter_28pt-LightItalic.ttf",
+				"Resources/Inter/static/Inter_28pt-Medium.ttf",
+				"Resources/Inter/static/Inter_28pt-MediumItalic.ttf",
+				"Resources/Inter/static/Inter_28pt-Regular.ttf",
+				"Resources/Inter/static/Inter_28pt-SemiBold.ttf",
+				"Resources/Inter/static/Inter_28pt-SemiBoldItalic.ttf",
+				"Resources/Inter/static/Inter_28pt-Thin.ttf",
+				"Resources/Inter/static/Inter_28pt-ThinItalic.ttf",
+			);
+			target = A93B1B082E88540F00B5AA7D /* ReliefNet */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A93B1B0B2E88540F00B5AA7D /* ReliefNet */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A93B1BBF2E885E1400B5AA7D /* Exceptions for "ReliefNet" folder in "ReliefNet" target */,
+			);
 			path = ReliefNet;
 			sourceTree = "<group>";
 		};
@@ -400,6 +480,7 @@
 				DEVELOPMENT_TEAM = SU4W2T7DVJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ReliefNet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -432,6 +513,7 @@
 				DEVELOPMENT_TEAM = SU4W2T7DVJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ReliefNet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
