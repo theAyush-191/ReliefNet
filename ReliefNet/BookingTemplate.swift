@@ -49,6 +49,7 @@ struct BookingCardView: View {
         switch booking.status {
         case "Pending": return .blue
         case "Confirmed":  return .green
+        case "Cancelled": return .red
         default:          return .gray
         }
     }

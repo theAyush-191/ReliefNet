@@ -112,7 +112,14 @@ struct Booking: Identifiable {
     var meetingType: String
     var date: Date
     var price: Int
-    var isCompleted: Bool = false
+    var isCompleted: Bool {
+        if status == "Complete"{
+            return true
+        }
+        else{
+            return false
+        }
+    }
     var isPaid: Bool = false
 }
 
@@ -136,13 +143,12 @@ struct Bookings {
                 price: 1500),
         
         Booking(name: "Dr. Kavita Iyer",
-                status: "Complete",
-                statusColor: .blue,
+                status: "Cancelled",
+                statusColor: .red,
                 purpose: "Stress Management",
                 meetingType: "Video Call",
                 date: Date().addingTimeInterval(-86400),
                 price: 1000,
-                isCompleted: true,
                 isPaid: true), // -1 day
         
         Booking(name: "Dr. Rahul Khanna",
@@ -160,8 +166,7 @@ struct Bookings {
                 purpose: "Initial Evaluation",
                 meetingType: "Video Call",
                 date: Date().addingTimeInterval(-7 * 86400),
-                price: 900,
-                isCompleted: false), // -7 days
+                price: 900), // -7 days
         
         Booking(name: "Dr. Manish Gupta",
                 status: "Complete",
@@ -170,12 +175,11 @@ struct Bookings {
                 meetingType: "Home Visit",
                 date: Date().addingTimeInterval(-2 * 86400),
                 price: 2000,
-                isCompleted: true,
                 isPaid: true), // -2 days
         
         Booking(name: "Dr. Priya Nair",
-                status: "Confirmed",
-                statusColor: .green,
+                status: "Cancelled",
+                statusColor: .red,
                 purpose: "Mindfulness Coaching",
                 meetingType: "Video Call",
                 date: Date().addingTimeInterval(10 * 86400),
@@ -197,7 +201,6 @@ struct Bookings {
                 meetingType: "Video Call",
                 date: Date().addingTimeInterval(-5 * 86400),
                 price: 1100,
-                isCompleted: true,
                 isPaid: true), // -5 days
         
         Booking(name: "Dr. Vikram Desai",
