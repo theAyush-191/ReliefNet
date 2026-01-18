@@ -126,9 +126,9 @@ struct HeaderView: View {
             
             Image("appLogo").resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 80)
             
-            Text("ReliefNet").font(.system(size: 65,design: .serif)).foregroundStyle(.white)
+            Text("ReliefNet").font(.system(size: 50,design: .serif)).foregroundStyle(.white)
             
-            Text("Bridging Care, Compassion, and Connection").font(.system(size: 14,design: .serif)).foregroundStyle(.white)
+            Text("Bridging Care, Compassion, and Connection").font(.system(size: 12,design: .serif)).foregroundStyle(.white)
         }
     }
 }
@@ -166,10 +166,11 @@ struct SocialLoginButtonsView: View {
                     SocialLoginButton(imageName: "googleLogo", text: "Continue with Google",isGoogle:true)
                 }
                 
-                NavigationLink(destination: LoadingView())
-                {
-                    SocialLoginButton(imageName: "apple.logo", text: "Continue with Apple")
-                }
+//                NavigationLink(destination: LoadingView())
+//                {
+//                    SocialLoginButton(imageName: "apple.logo", text: "Continue with Apple")
+//                }
+                
             }.navigationBarBackButtonHidden(true )
 //        }
     }

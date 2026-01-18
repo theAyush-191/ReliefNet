@@ -72,7 +72,24 @@ struct SidebarView: View {
                 SidebarRow(icon: "questionmark.circle", text: "Help")
             }
             
-            Button(action: {session.logout()
+            Button(action: {
+                do{
+                    
+                let result = try AuthenticationManager.shared.signOut()
+                if result {
+                    session.logout()
+                    print("LogOut Successful!")
+                }
+                else{
+                    print("LogOut Failed!")
+                }
+                
+            }catch{
+                print(error.localizedDescription)
+            }
+                
+                
+                
             }) {
                 SidebarRow(icon: "rectangle.portrait.and.arrow.right", text: "Log Out")
             }

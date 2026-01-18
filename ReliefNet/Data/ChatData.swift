@@ -6,6 +6,15 @@
 //
 import Foundation
 
+struct chatList: Identifiable {
+    var id: UUID = UUID()
+    var name: String
+    var lastMessage: String
+    var lastMessageDate: Date
+    var unreadCount: Int
+    
+}
+
 struct ChatData:Identifiable{
     var id = UUID()
     var date : Date = Date()

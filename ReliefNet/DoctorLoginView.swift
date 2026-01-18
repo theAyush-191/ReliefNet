@@ -13,8 +13,9 @@ struct DoctorLoginView: View {
     @State private var medicalID: String = ""
     @State private var password: String = ""
     @State private var email: String = ""
+   
     @State var showSignupSheet : Bool = false
-//    @StateObject var signinInfo = SignInEmailViewModelInfo()
+
     @EnvironmentObject var session: UserSession
     
     var isFormValid : Bool {
@@ -23,7 +24,10 @@ struct DoctorLoginView: View {
     
     @State var isLoading : Bool = false
     @State var showVerificationSheet : Bool = false
-
+    @State var didForget : Bool = false
+    @State var showAlert : Bool = false
+    @State var alertTitle : String = ""
+    @State var alertMessage : String = ""
     
     var body: some View {
             ZStack {
@@ -62,6 +66,13 @@ struct DoctorLoginView: View {
                         
                         CustomTextField(hint: "Password",icon: "key", text: $password, keyboard: .default, isSecure: true)
                         
+                        Button{
+                            didForget.toggle()
+                        }
+                        label:{
+                            Text("Forgot password?").font(.callout).foregroundStyle(.black).frame(maxWidth: .infinity,alignment: .trailing)
+                        }
+                        
                        
                     }
                     
@@ -80,7 +91,9 @@ struct DoctorLoginView: View {
                                 }
                                 
                             }catch{
-                                print(error.localizedDescription)
+                                alertTitle = "Login Error"
+                                alertMessage = error.localizedDescription
+                                showAlert = true
                             }
                             isLoading = false
                     }
@@ -127,7 +140,36 @@ struct DoctorLoginView: View {
             }.sheet(isPresented:$showVerificationSheet) {
                 EmailVerificationSheet().presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
+            }.alert("Reset Password",isPresented: $didForget) {
+                TextField("Enter your email", text: $email)
+                
+                Button("Send Link"){
+                    Task{
+                        do{
+                            try await AuthenticationManager.shared.forgotPassword(email: email)
+                            alertTitle = "Status"
+                            alertMessage = "Password reset link sent to your email."
+                        }catch{
+                            alertTitle = "Reset Password Error"
+                            alertMessage = error.localizedDescription
+                        }
+                        showAlert = true
+                    }
+            
+                }
+                
+                Button("Cancel" , role : .cancel){
+                    email = ""
+                }
+                
+            }message:{
+                Text("We’ll send a reset link to your email")
+            }.alert(alertTitle,isPresented: $showAlert){
+                Button("Ok",role: .cancel){}
+            }message: {
+                Text(alertMessage)
             }
+
 
         
     }

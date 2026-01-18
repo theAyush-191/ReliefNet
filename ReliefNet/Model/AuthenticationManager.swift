@@ -29,7 +29,10 @@ final class AuthenticationManager {
         return Auth.auth().currentUser == nil
         
     }
-
+    
+    func forgotPassword(email:String ) async throws{
+        try await Auth.auth().sendPasswordReset(withEmail: email)
+    }
     // MARK: - Current User
     var currentUser: User? {
         Auth.auth().currentUser

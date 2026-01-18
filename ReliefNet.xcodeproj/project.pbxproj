@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A922C8A12EBAA67C00EAB277 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A922C8A02EBAA67C00EAB277 /* FirebaseAuth */; };
+		A922C8A42EBAA74300EAB277 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A922C8A32EBAA74300EAB277 /* FirebaseCore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A93B1B172E88541100B5AA7D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -30,91 +35,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A93B1BBF2E885E1400B5AA7D /* Exceptions for "ReliefNet" folder in "ReliefNet" target */ = {
+		A95A0B832F121C3F00F628DE /* Exceptions for "ReliefNet" folder in "ReliefNet" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				"Resources/Cantata_One/CantataOne-Regular.ttf",
-				Resources/Cantata_One/OFL.txt,
-				"Resources/Inria_Serif/InriaSerif-Bold.ttf",
-				"Resources/Inria_Serif/InriaSerif-BoldItalic.ttf",
-				"Resources/Inria_Serif/InriaSerif-Italic.ttf",
-				"Resources/Inria_Serif/InriaSerif-Light.ttf",
-				"Resources/Inria_Serif/InriaSerif-LightItalic.ttf",
-				"Resources/Inria_Serif/InriaSerif-Regular.ttf",
-				Resources/Inria_Serif/OFL.txt,
-				"Resources/Inter/Inter-Italic-VariableFont_opsz,wght.ttf",
-				"Resources/Inter/Inter-VariableFont_opsz,wght.ttf",
-				Resources/Inter/OFL.txt,
-				Resources/Inter/README.txt,
-				"Resources/Inter/static/Inter_18pt-Black.ttf",
-				"Resources/Inter/static/Inter_18pt-BlackItalic.ttf",
-				"Resources/Inter/static/Inter_18pt-Bold.ttf",
-				"Resources/Inter/static/Inter_18pt-BoldItalic.ttf",
-				"Resources/Inter/static/Inter_18pt-ExtraBold.ttf",
-				"Resources/Inter/static/Inter_18pt-ExtraBoldItalic.ttf",
-				"Resources/Inter/static/Inter_18pt-ExtraLight.ttf",
-				"Resources/Inter/static/Inter_18pt-ExtraLightItalic.ttf",
-				"Resources/Inter/static/Inter_18pt-Italic.ttf",
-				"Resources/Inter/static/Inter_18pt-Light.ttf",
-				"Resources/Inter/static/Inter_18pt-LightItalic.ttf",
-				"Resources/Inter/static/Inter_18pt-Medium.ttf",
-				"Resources/Inter/static/Inter_18pt-MediumItalic.ttf",
-				"Resources/Inter/static/Inter_18pt-Regular.ttf",
-				"Resources/Inter/static/Inter_18pt-SemiBold.ttf",
-				"Resources/Inter/static/Inter_18pt-SemiBoldItalic.ttf",
-				"Resources/Inter/static/Inter_18pt-Thin.ttf",
-				"Resources/Inter/static/Inter_18pt-ThinItalic.ttf",
-				"Resources/Inter/static/Inter_24pt-Black.ttf",
-				"Resources/Inter/static/Inter_24pt-BlackItalic.ttf",
-				"Resources/Inter/static/Inter_24pt-Bold.ttf",
-				"Resources/Inter/static/Inter_24pt-BoldItalic.ttf",
-				"Resources/Inter/static/Inter_24pt-ExtraBold.ttf",
-				"Resources/Inter/static/Inter_24pt-ExtraBoldItalic.ttf",
-				"Resources/Inter/static/Inter_24pt-ExtraLight.ttf",
-				"Resources/Inter/static/Inter_24pt-ExtraLightItalic.ttf",
-				"Resources/Inter/static/Inter_24pt-Italic.ttf",
-				"Resources/Inter/static/Inter_24pt-Light.ttf",
-				"Resources/Inter/static/Inter_24pt-LightItalic.ttf",
-				"Resources/Inter/static/Inter_24pt-Medium.ttf",
-				"Resources/Inter/static/Inter_24pt-MediumItalic.ttf",
-				"Resources/Inter/static/Inter_24pt-Regular.ttf",
-				"Resources/Inter/static/Inter_24pt-SemiBold.ttf",
-				"Resources/Inter/static/Inter_24pt-SemiBoldItalic.ttf",
-				"Resources/Inter/static/Inter_24pt-Thin.ttf",
-				"Resources/Inter/static/Inter_24pt-ThinItalic.ttf",
-				"Resources/Inter/static/Inter_28pt-Black.ttf",
-				"Resources/Inter/static/Inter_28pt-BlackItalic.ttf",
-				"Resources/Inter/static/Inter_28pt-Bold.ttf",
-				"Resources/Inter/static/Inter_28pt-BoldItalic.ttf",
-				"Resources/Inter/static/Inter_28pt-ExtraBold.ttf",
-				"Resources/Inter/static/Inter_28pt-ExtraBoldItalic.ttf",
-				"Resources/Inter/static/Inter_28pt-ExtraLight.ttf",
-				"Resources/Inter/static/Inter_28pt-ExtraLightItalic.ttf",
-				"Resources/Inter/static/Inter_28pt-Italic.ttf",
-				"Resources/Inter/static/Inter_28pt-Light.ttf",
-				"Resources/Inter/static/Inter_28pt-LightItalic.ttf",
-				"Resources/Inter/static/Inter_28pt-Medium.ttf",
-				"Resources/Inter/static/Inter_28pt-MediumItalic.ttf",
-				"Resources/Inter/static/Inter_28pt-Regular.ttf",
-				"Resources/Inter/static/Inter_28pt-SemiBold.ttf",
-				"Resources/Inter/static/Inter_28pt-SemiBoldItalic.ttf",
-				"Resources/Inter/static/Inter_28pt-Thin.ttf",
-				"Resources/Inter/static/Inter_28pt-ThinItalic.ttf",
 			);
 			target = A93B1B082E88540F00B5AA7D /* ReliefNet */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A93B1B0B2E88540F00B5AA7D /* ReliefNet */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				A93B1BBF2E885E1400B5AA7D /* Exceptions for "ReliefNet" folder in "ReliefNet" target */,
-			);
-			path = ReliefNet;
-			sourceTree = "<group>";
-		};
 		A93B1B192E88541100B5AA7D /* ReliefNetTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ReliefNetTests;
@@ -125,6 +55,14 @@
 			path = ReliefNetUITests;
 			sourceTree = "<group>";
 		};
+		A95A0B572F121C3F00F628DE /* ReliefNet */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A95A0B832F121C3F00F628DE /* Exceptions for "ReliefNet" folder in "ReliefNet" target */,
+			);
+			path = ReliefNet;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A922C8A42EBAA74300EAB277 /* FirebaseCore in Frameworks */,
+				A922C8A12EBAA67C00EAB277 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,12 +92,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A922C8A22EBAA74300EAB277 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A93B1B002E88540F00B5AA7D = {
 			isa = PBXGroup;
 			children = (
-				A93B1B0B2E88540F00B5AA7D /* ReliefNet */,
+				A95A0B572F121C3F00F628DE /* ReliefNet */,
 				A93B1B192E88541100B5AA7D /* ReliefNetTests */,
 				A93B1B232E88541100B5AA7D /* ReliefNetUITests */,
+				A922C8A22EBAA74300EAB277 /* Frameworks */,
 				A93B1B0A2E88540F00B5AA7D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -188,10 +136,12 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A93B1B0B2E88540F00B5AA7D /* ReliefNet */,
+				A95A0B572F121C3F00F628DE /* ReliefNet */,
 			);
 			name = ReliefNet;
 			packageProductDependencies = (
+				A922C8A02EBAA67C00EAB277 /* FirebaseAuth */,
+				A922C8A32EBAA74300EAB277 /* FirebaseCore */,
 			);
 			productName = ReliefNet;
 			productReference = A93B1B092E88540F00B5AA7D /* ReliefNet.app */;
@@ -251,7 +201,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					A93B1B082E88540F00B5AA7D = {
 						CreatedOnToolsVersion = 26.0.1;
@@ -275,6 +225,9 @@
 			);
 			mainGroup = A93B1B002E88540F00B5AA7D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A922C89F2EBAA67C00EAB277 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A93B1B0A2E88540F00B5AA7D /* Products */;
 			projectDirPath = "";
@@ -408,6 +361,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -465,6 +419,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -662,6 +617,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A922C89F2EBAA67C00EAB277 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 12.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A922C8A02EBAA67C00EAB277 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A922C89F2EBAA67C00EAB277 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		A922C8A32EBAA74300EAB277 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A922C89F2EBAA67C00EAB277 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A93B1B012E88540F00B5AA7D /* Project object */;
 }

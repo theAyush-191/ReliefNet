@@ -7,9 +7,11 @@
 
 import SwiftUI
 
+struct user{
+    var userType: String = "Patient"
 
-
-
+    
+}
 
 
 // MARK: - Doctor Model
@@ -45,7 +47,7 @@ struct Feedback: Identifiable {
 
 // Sample Data
 let sampleDoctor = Doctor(
-    name: "Dr. Mohit Sharma",
+    name: "Dr. Meera Sharma",
     specialization: "Psychiatrist",
     address: "Lucknow, Uttar Pradesh",
     experience: 8,
@@ -212,3 +214,186 @@ struct Bookings {
 }
 
 
+
+
+
+
+
+//import SwiftUI
+//
+//// =======================================================
+//// MARK: - Patient (User) Model
+//// =======================================================
+//struct Patient: Identifiable {
+//    var id = UUID()
+//    var image: String = "profileImage"
+//    var name: String
+//    var email: String
+//    var age: Int
+//    var gender: String
+//    var phone: Int
+//    var address: String
+//    var totalBookings: Int
+//}
+//
+//// Sample Patient
+//var samplePatient = Patient(
+//    name: "Ayush Singh",
+//    email: "ayush@example.com",
+//    age: 22,
+//    gender: "Male",
+//    phone: 9876543210,
+//    address: "Lucknow, India",
+//    totalBookings: 5
+//)
+//
+//
+//// =======================================================
+//// MARK: - Doctor Model
+//// =======================================================
+//struct Doctor: Identifiable {
+//    var id = UUID()
+//    var name: String
+//    var specialization: String
+//    var address: String
+//    var experience: Int
+//    var image: String = "doctorPic"
+//    var about: String
+//}
+//
+//// Sample Doctor
+//let sampleDoctor = Doctor(
+//    name: "Dr. Mohit Sharma",
+//    specialization: "Psychiatrist",
+//    address: "Lucknow, Uttar Pradesh",
+//    experience: 8,
+//    about: "Experienced psychiatrist specializing in anxiety, depression, and stress-related issues. Passionate about improving mental well-being through therapy and guidance."
+//)
+//
+//
+//// =======================================================
+//// MARK: - Session Model (Doctor Dashboard)
+//// =======================================================
+//struct Session: Identifiable {
+//    let id = UUID()
+//    let date: String
+//    let time: String
+//    let patientName: String
+//    let duration: String
+//    let type: String          // Online / In-person
+//    let status: String
+//}
+//
+//// Sample Sessions
+//let sampleSessions: [Session] = [
+//    Session(
+//        date: "Oct 12, 2025",
+//        time: "10:30 AM",
+//        patientName: "Rohit Verma",
+//        duration: "45 min",
+//        type: "Online",
+//        status: "Completed"
+//    ),
+//    Session(
+//        date: "Oct 13, 2025",
+//        time: "11:00 AM",
+//        patientName: "Neha Singh",
+//        duration: "30 min",
+//        type: "In-person",
+//        status: "Completed"
+//    ),
+//    Session(
+//        date: "Oct 14, 2025",
+//        time: "1:00 PM",
+//        patientName: "Aditya Raj",
+//        duration: "40 min",
+//        type: "Online",
+//        status: "Upcoming"
+//    )
+//]
+//
+//
+//// =======================================================
+//// MARK: - Feedback Model
+//// =======================================================
+//struct Feedback: Identifiable {
+//    let id = UUID()
+//    let patientName: String
+//    let rating: Double
+//    let comment: String
+//    let date: String
+//}
+//
+//// Sample Feedbacks
+//let sampleFeedbacks: [Feedback] = [
+//    Feedback(
+//        patientName: "Rohit Verma",
+//        rating: 4.8,
+//        comment: "Very helpful session, felt much better after talking.",
+//        date: "Oct 12, 2025"
+//    ),
+//    Feedback(
+//        patientName: "Neha Singh",
+//        rating: 5.0,
+//        comment: "Excellent advice and caring approach.",
+//        date: "Oct 13, 2025"
+//    ),
+//    Feedback(
+//        patientName: "Aditya Raj",
+//        rating: 4.5,
+//        comment: "Good experience overall.",
+//        date: "Oct 14, 2025"
+//    )
+//]
+//
+//
+//// =======================================================
+//// MARK: - Booking Model
+//// =======================================================
+//struct Booking: Identifiable {
+//    var id = UUID()
+//    var name: String
+//    var status: String
+//    var statusColor: Color
+//    var purpose: String
+//    var meetingType: String
+//    var date: Date
+//    var price: Int
+//    var isPaid: Bool = false
+//
+//    var isCompleted: Bool {
+//        status == "Complete"
+//    }
+//}
+//
+//// Sample Bookings
+//let sampleBookings: [Booking] = [
+//    Booking(
+//        name: "Dr. Meera Sharma",
+//        status: "Confirmed",
+//        statusColor: .green,
+//        purpose: "Therapy Session",
+//        meetingType: "Video Call",
+//        date: Date().addingTimeInterval(86400),
+//        price: 1200
+//    ),
+//    Booking(
+//        name: "Dr. Arjun Verma",
+//        status: "Pending",
+//        statusColor: .yellow,
+//        purpose: "Follow-up Consultation",
+//        meetingType: "Home Visit",
+//        date: Date().addingTimeInterval(2 * 86400),
+//        price: 1500
+//    ),
+//    Booking(
+//        name: "Dr. Manish Gupta",
+//        status: "Complete",
+//        statusColor: .blue,
+//        purpose: "Depression Support",
+//        meetingType: "Home Visit",
+//        date: Date().addingTimeInterval(-2 * 86400),
+//        price: 2000,
+//        isPaid: true
+//    )
+//]

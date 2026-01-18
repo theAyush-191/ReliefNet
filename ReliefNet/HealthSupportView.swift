@@ -16,7 +16,7 @@ struct HealthSupportView: View {
         VStack(spacing: 20){
             Button {
                 session.selectedTab = .discover
-                dismiss()
+                
             } label: {
                 selectionCardView(title: "INDIVIDUAL",bgColor:"lavandor")
             }.tint(.black)
