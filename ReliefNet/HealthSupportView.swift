@@ -8,19 +8,32 @@
 import SwiftUI
 
 struct HealthSupportView: View {
+    @EnvironmentObject var session: UserSession
+    
+    @Environment(\.dismiss) var dismiss
+//    @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack(spacing: 20){
-            NavigationLink(destination: TabsView(startingTab: .discover)){
+            Button {
+                session.selectedTab = .discover
+                dismiss()
+            } label: {
                 selectionCardView(title: "INDIVIDUAL",bgColor:"lavandor")
             }.tint(.black)
             
-            NavigationLink(destination: TabsView(startingTab: .discover)){
+            Button {
+                session.selectedTab = .discover
+            } label: {
                 selectionCardView(title: "CHILD",bgColor:"lightYellow")
             }.tint(.black)
-            NavigationLink(destination: TabsView(startingTab: .discover)){
+            Button {
+                session.selectedTab = .discover
+            } label: {
                 selectionCardView(title: "TEEN",bgColor:"mintGreen")
             }.tint(.black)
-            NavigationLink(destination: TabsView(startingTab: .discover)){
+            Button {
+                session.selectedTab = .discover
+            } label: {
                 selectionCardView(title: "COUPLE",bgColor:"peach")
             }.tint(.black)
         }.padding(20).toolbar {
@@ -54,6 +67,6 @@ struct selectionCardView: View{
 }
 
 #Preview {
-    LoginView()
+    HealthSupportView()
 
 }

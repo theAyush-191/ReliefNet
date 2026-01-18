@@ -104,8 +104,14 @@ Spacer()
             ToolbarItem(placement: .principal) {
                 Text(doctorName).font(.system(size:20))
             }
-            ToolbarItem(placement: .subtitle) {
-                Text(formattedTime).font(.callout)
+            if #available(iOS 26.0, *) {
+                ToolbarItem(placement: .subtitle) {
+                    Text(formattedTime).font(.callout)
+                }
+            } else {
+                ToolbarItem(placement: .automatic) {
+                    Text(formattedTime).font(.callout)
+                }
             }
         }
     }

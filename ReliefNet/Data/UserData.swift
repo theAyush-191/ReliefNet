@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-struct user{
-    var userType: String = "Patient"
 
-    
-}
+
+
 
 
 // MARK: - Doctor Model
@@ -47,7 +45,7 @@ struct Feedback: Identifiable {
 
 // Sample Data
 let sampleDoctor = Doctor(
-    name: "Dr. Meera Sharma",
+    name: "Dr. Mohit Sharma",
     specialization: "Psychiatrist",
     address: "Lucknow, Uttar Pradesh",
     experience: 8,

@@ -8,30 +8,35 @@
 import SwiftUI
 
 struct DoctorProfile: View {
-    
-    @State private var doctor: Doctor = sampleDoctor
+    @EnvironmentObject var session: UserSession
+
+    var doctor: Doctor {
+        session.currentDoctor ?? sampleDoctor
+    }
+    var doctorBinding: Binding<Doctor> {
+        Binding(
+            get: { session.currentDoctor ?? sampleDoctor },
+            set: { session.currentDoctor = $0 }
+        )
+    }
+
     @State private var sessions: [Session] = sampleSessions
     @State private var feedbacks: [Feedback] = sampleFeedbacks
-    
     @State private var showHistory = false
     @State private var showEditSheet = false
-    
-    
-    
+
     var body: some View {
-        NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    
-                    // MARK: - Profile Header
+                    // Profile Header
                     HStack(spacing: 20) {
-                        Image("doctorPic")
+                        Image(doctor.image)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 100, height: 100)
                             .clipShape(Circle())
                             .shadow(radius: 6)
-                        
+
                         VStack(alignment: .leading, spacing: 6) {
                             Text(doctor.name)
                                 .font(.title2.bold())
@@ -44,10 +49,10 @@ struct DoctorProfile: View {
                         }
                     }
                     .padding(.horizontal)
-                    
+
                     Divider()
-                    
-                    // MARK: - About Section
+
+                    // About Section
                     VStack(alignment: .leading, spacing: 8) {
                         Text("About")
                             .font(.headline)
@@ -56,39 +61,31 @@ struct DoctorProfile: View {
                             .foregroundColor(.gray)
                     }
                     .padding(.horizontal)
-                    
+
                     Divider()
-                    
-                    // MARK: - Session History
+
+                    // Session History
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Text("Session History")
                                 .font(.headline)
                             Spacer()
-                            Button(action: {
-                                showHistory.toggle()
-                            }) {
+                            Button(action: { showHistory.toggle() }) {
                                 Text("View All")
                                     .font(.caption)
                                     .foregroundColor(.blue)
                             }
                         }
-                        
-                        if showHistory {
-                            ForEach(sessions) { session in
-                                SessionCardView(session: session)
-                            }
-                        } else {
-                            ForEach(sessions.prefix(3)) { session in
-                                SessionCardView(session: session)
-                            }
+
+                        ForEach(showHistory ? sessions : Array(sessions.prefix(3))) { session in
+                            SessionCardView(session: session)
                         }
                     }
                     .padding(.horizontal)
-                    
+
                     Divider()
-                    
-                    // MARK: - Feedback Section
+
+                    // Feedback Section
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Text("Feedback & Ratings")
@@ -98,13 +95,12 @@ struct DoctorProfile: View {
                                 .font(.subheadline)
                                 .foregroundColor(.orange)
                         }
-                        
+
                         ForEach(feedbacks) { feedback in
                             FeedbackCardView(feedback: feedback)
                         }
                     }
                     .padding(.horizontal)
-                    
                 }
                 .padding(.vertical)
             }
@@ -112,20 +108,17 @@ struct DoctorProfile: View {
             .navigationTitle("My Profile")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showEditSheet.toggle()
-                    }) {
+                    Button(action: { showEditSheet.toggle() }) {
                         Label("Edit", systemImage: "square.and.pencil")
                     }
                 }
             }
             .sheet(isPresented: $showEditSheet) {
-                EditDoctorProfileView(doctor: $doctor)
+                EditDoctorProfileView(doctor: doctorBinding)
             }
-        }
+        
     }
-    
-    // MARK: - Helper Function
+
     func averageRating() -> Double {
         let total = feedbacks.map { $0.rating }.reduce(0, +)
         return total / Double(feedbacks.count)
@@ -133,8 +126,8 @@ struct DoctorProfile: View {
 }
 
 struct SessionCardView: View {
-    var session : Session
-    var body : some View {
+    var session: Session
+    var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(session.patientName)
@@ -160,9 +153,9 @@ struct SessionCardView: View {
     }
 }
 
-struct FeedbackCardView: View{
-    var feedback:Feedback
-    var body : some View {
+struct FeedbackCardView: View {
+    var feedback: Feedback
+    var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Text(feedback.patientName)
@@ -184,6 +177,18 @@ struct FeedbackCardView: View{
 }
 
 
-#Preview {
-    DoctorProfile()
-}
+    #Preview {
+        let session = UserSession()
+        session.currentDoctor = Doctor(
+            name: "Dr. Meer Sharma",
+            specialization: "Psychiatrist",
+            address: "Lucknow, Uttar Pradesh",
+            experience: 8,
+            about: "Experienced psychiatrist specializing in anxiety, depression, and stress-related issues."
+        )
+
+        return NavigationStack {
+            DoctorProfile()
+                .environmentObject(session)
+        }
+    }

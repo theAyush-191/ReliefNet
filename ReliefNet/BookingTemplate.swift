@@ -91,7 +91,9 @@ struct BookingCardView: View {
                 if booking.isCompleted{
                     Button("Book Again") {}
                         .buttonStyle(BookingCardButtonStyle(isPrimary: true))
-                    Button("Leave Review") {}
+                    Button("Leave Review") {
+                        
+                    }
                         .buttonStyle(BookingCardButtonStyle(isPrimary: false))
                 }else{
                     Button("Join / Directions") {}

@@ -39,8 +39,14 @@ struct ChatDetailedView: View {
                 ToolbarItem(placement: .principal) {
                     Text(chatTitle).font(.system(size:20))
                 }
-                ToolbarItem(placement: .subtitle) {
-                    Text("Active").font(.callout)
+                if #available(iOS 26.0, *) {
+                    ToolbarItem(placement: .subtitle) {
+                        Text("Active").font(.callout)
+                    }
+                } else {
+                    ToolbarItem(placement: .automatic) {
+                        Text("Active").font(.callout)
+                    }
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Image(systemName: "camera").frame(width:40)

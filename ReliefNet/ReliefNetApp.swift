@@ -5,6 +5,7 @@
 //  Created by Ayush Singh on 27/09/25.
 //
 import SwiftUI
+import FirebaseCore
 import Combine
 // MARK: - User Session
 enum Tab: Hashable {
@@ -21,58 +22,70 @@ enum Tab: Hashable {
 }
 // Shared app state: user type, login status, selected role
 class UserSession: ObservableObject {
-    // MARK: - AppStorage properties
-    @AppStorage("userType") private var storedUserType: String = "doctor"
+
+    @AppStorage("userType") private var storedUserType: String = "Patient"
     @AppStorage("isLoggedIn") private var storedIsLoggedIn: Bool = false
     @AppStorage("roleSelected") private var storedRoleSelected: Bool = false
 
-    // MARK: - Published properties (EnvironmentObject)
-    @Published var userType: String = "doctor"
+    @Published var userType: String = "Patient"
     @Published var isLoggedIn: Bool = false
     @Published var roleSelected: Bool = false
-    
-    @Published var selectedTab: Tab = .home
+//    @Published var signedIn: Bool = false
 
+    @Published var currentDoctor: Doctor? = nil
+    @Published var currentPatient: Patient? = nil
+    @Published var selectedTab: TabsView.Tab = .home
     init() {
-        // Initialize Published properties from UserDefaults directly to avoid accessing
-        // @AppStorage (which requires `self`) before initialization is complete.
         let defaults = UserDefaults.standard
-        let initialUserType = defaults.string(forKey: "userType") ?? "doctor"
-        let initialIsLoggedIn = defaults.object(forKey: "isLoggedIn") as? Bool ?? false
-        let initialRoleSelected = defaults.object(forKey: "roleSelected") as? Bool ?? false
-
-        self.userType = initialUserType
-        self.isLoggedIn = initialIsLoggedIn
-        self.roleSelected = initialRoleSelected
+        userType = defaults.string(forKey: "userType") ?? "Patient"
+        isLoggedIn = defaults.bool(forKey: "isLoggedIn")
+        roleSelected = defaults.bool(forKey: "roleSelected")
     }
 
-    // MARK: - Methods to update both Published and AppStorage
-    func setUserType(_ type: String) {
+    func login(as type: String) {
         userType = type
+        isLoggedIn = true
+        roleSelected = true
+
         storedUserType = type
+        storedIsLoggedIn = true
+        storedRoleSelected = true
     }
 
-    func setLoginStatus(_ status: Bool) {
-        isLoggedIn = status
-        storedIsLoggedIn = status
-    }
+    func logout() {
+        isLoggedIn = false
+        roleSelected = false
 
-    func setRoleSelected(_ role: Bool) {
-        roleSelected = role
-        storedRoleSelected = role
+        storedIsLoggedIn = false
+        storedRoleSelected = false
     }
+}
+
+//App Delegate for Firebase Auth
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
 }
 
 // MARK: - Main App
 
 @main
 struct ReliefNetApp: App {
+    
     @StateObject private var session = UserSession()
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .environmentObject(session) // Inject session globally
+            NavigationStack{
+                RootView().environmentObject(session)
+            }
         }
     }
 }
@@ -80,17 +93,24 @@ struct ReliefNetApp: App {
 // MARK: - Root View
 
 struct RootView: View {
+
     @EnvironmentObject var session: UserSession
-    
+
     var body: some View {
-        Group {
-            if session.isLoggedIn && session.roleSelected{
-                TabsView(startingTab: .home)
-                    .environmentObject(session)
-                        } else {
-                            LoginView()
-                                .environmentObject(session)
-                        }
+
+        if !session.roleSelected {
+            RoleSelectionView()
+
+        } else if !session.isLoggedIn {
+
+            if session.userType == "Doctor" {
+                DoctorLoginView()
+            } else {
+                PatientLoginView()
+            }
+
+        } else {
+            TabsView()
         }
     }
 }

@@ -64,7 +64,7 @@ struct SidebarView: View {
             )
 
             // Simple NavigationLinks for direct navigation
-            NavigationLink(destination: TabsView(startingTab: .profile)) {
+            NavigationLink(destination: TabsView().environmentObject(session)) {
                 SidebarRow(icon: "person.fill", text: "Profile")
             }
 
@@ -72,8 +72,8 @@ struct SidebarView: View {
                 SidebarRow(icon: "questionmark.circle", text: "Help")
             }
             
-            Button(action: {session.setLoginStatus(false)
-                session.setRoleSelected(false)}) {
+            Button(action: {session.logout()
+            }) {
                 SidebarRow(icon: "rectangle.portrait.and.arrow.right", text: "Log Out")
             }
 

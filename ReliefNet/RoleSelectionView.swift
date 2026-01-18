@@ -9,9 +9,7 @@ import SwiftUI
 
 struct RoleSelectionView: View {
     @EnvironmentObject var session: UserSession
-    @Environment(\.dismiss) var dismiss
-    
-//    @State private var navigateToTabs = false
+
     
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
@@ -31,10 +29,11 @@ struct RoleSelectionView: View {
                 cardColor: Color.blue.opacity(0.1)
             )
             .onTapGesture {
-                session.setUserType("Doctor")
-                session.setRoleSelected(true)
-                session.setLoginStatus(true)
-//                navigateToTabs = true
+                withAnimation {
+                    session.userType = "Doctor"  // directly set the user type
+                    session.roleSelected = true  // mark role as selected
+                    session.isLoggedIn = false
+                }
             }
             
             // --- Patient Card ---
@@ -46,32 +45,17 @@ struct RoleSelectionView: View {
                 cardColor: Color.purple.opacity(0.1)
             )
             .onTapGesture {
-                session.setUserType("Patient")
-                session.setRoleSelected(true)
-                session.setLoginStatus(true)
-//                navigateToTabs = true
+                withAnimation {
+                    session.userType = "Patient"
+                    session.roleSelected = true
+                    session.isLoggedIn = false
+                }
             }
             
             Spacer()
         }
-//        .fullScreenCover(isPresented: $navigateToTabs) {
-//            TabsView(startingTab: .home)
-//                .environmentObject(session) // important to pass environment object
-//        }
-        .navigationBarBackButtonHidden(true)
-//        .navigationBarTitleDisplayMode(.inline)
-//        .toolbar{
-//            ToolbarItem(placement: .topBarLeading) {
-//                Button(action: {
-//                    dismiss()
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                        dismiss()
-//                    }
-//                }) {
-//                    Image(systemName: "chevron.left")
-//                }
-//            }
-//        }
+        .navigationBarBackButtonHidden(false)
+//
         .padding(.horizontal)
     }
 }

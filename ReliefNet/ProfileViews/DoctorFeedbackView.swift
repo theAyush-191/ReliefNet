@@ -12,7 +12,7 @@ struct DoctorFeedbackView: View {
     @State private var feedbacks:[Feedback]=sampleFeedbacks
     
     var body: some View {
-        NavigationStack {
+
             List {
                 ForEach(feedbacks) { feedback in
                     VStack(alignment: .leading, spacing: 8) {
@@ -38,7 +38,7 @@ struct DoctorFeedbackView: View {
                 }
             }
             .navigationTitle("Patient Feedback")
-        }
+        
     }
 }
 
