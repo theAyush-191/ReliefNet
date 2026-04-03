@@ -11,6 +11,7 @@
 		A922C8A42EBAA74300EAB277 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A922C8A32EBAA74300EAB277 /* FirebaseCore */; };
 		A9A146FF2F2E3880002976CA /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A9A146FE2F2E3880002976CA /* GoogleSignIn */; };
 		A9A147012F2E3880002976CA /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A9A147002F2E3880002976CA /* GoogleSignInSwift */; };
+		A9D2A9D62F7FEC050069B47A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A9D2A9D52F7FEC050069B47A /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		A93B1B092E88540F00B5AA7D /* ReliefNet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReliefNet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93B1B162E88541100B5AA7D /* ReliefNetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReliefNetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93B1B202E88541100B5AA7D /* ReliefNetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReliefNetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9D2A9D52F7FEC050069B47A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -106,6 +108,7 @@
 		A93B1B002E88540F00B5AA7D = {
 			isa = PBXGroup;
 			children = (
+				A9D2A9D52F7FEC050069B47A /* README.md */,
 				A95A0B572F121C3F00F628DE /* ReliefNet */,
 				A93B1B192E88541100B5AA7D /* ReliefNetTests */,
 				A93B1B232E88541100B5AA7D /* ReliefNetUITests */,
@@ -252,6 +255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9D2A9D62F7FEC050069B47A /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
