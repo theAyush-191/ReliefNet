@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A922C8A12EBAA67C00EAB277 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A922C8A02EBAA67C00EAB277 /* FirebaseAuth */; };
 		A922C8A42EBAA74300EAB277 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A922C8A32EBAA74300EAB277 /* FirebaseCore */; };
+		A9A146FF2F2E3880002976CA /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A9A146FE2F2E3880002976CA /* GoogleSignIn */; };
+		A9A147012F2E3880002976CA /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A9A147002F2E3880002976CA /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 			files = (
 				A922C8A42EBAA74300EAB277 /* FirebaseCore in Frameworks */,
 				A922C8A12EBAA67C00EAB277 /* FirebaseAuth in Frameworks */,
+				A9A146FF2F2E3880002976CA /* GoogleSignIn in Frameworks */,
+				A9A147012F2E3880002976CA /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +146,8 @@
 			packageProductDependencies = (
 				A922C8A02EBAA67C00EAB277 /* FirebaseAuth */,
 				A922C8A32EBAA74300EAB277 /* FirebaseCore */,
+				A9A146FE2F2E3880002976CA /* GoogleSignIn */,
+				A9A147002F2E3880002976CA /* GoogleSignInSwift */,
 			);
 			productName = ReliefNet;
 			productReference = A93B1B092E88540F00B5AA7D /* ReliefNet.app */;
@@ -227,6 +233,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				A922C89F2EBAA67C00EAB277 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A9A146FD2F2E3880002976CA /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A93B1B0A2E88540F00B5AA7D /* Products */;
@@ -436,6 +443,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ReliefNet/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "\"We want your location to get your address.\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -470,6 +478,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ReliefNet/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "\"We want your location to get your address.\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -627,6 +636,14 @@
 				minimumVersion = 12.5.0;
 			};
 		};
+		A9A146FD2F2E3880002976CA /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -639,6 +656,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A922C89F2EBAA67C00EAB277 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
+		};
+		A9A146FE2F2E3880002976CA /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9A146FD2F2E3880002976CA /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		A9A147002F2E3880002976CA /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9A146FD2F2E3880002976CA /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
