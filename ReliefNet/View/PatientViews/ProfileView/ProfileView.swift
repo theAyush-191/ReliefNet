@@ -22,9 +22,14 @@ struct ProfileView: View {
     var body: some View {
 
         let name = session.userType == .patient ? patient.name : doctor.name
-        let profileImage = session.userType == .patient ? patient.image : doctor.image
-        let location = session.userType == .patient ? patient.address : doctor.clinic.first?.address ?? "N/A"
-
+        let profileImage = session.userType == .patient ? patient.imageURL : doctor.image
+        var location : String {
+            if let address = session.userType == .patient ? patient.address : doctor.clinic.first?.address{
+                return address
+            }else{
+                return "Add Location"
+            }
+        }
         ZStack {
             Image("appBG").resizable().ignoresSafeArea()
 
@@ -44,6 +49,7 @@ struct ProfileView: View {
                         VStack(alignment: .leading) {
                             Text(name)
                                 .font(.system(size: 30, design: .serif))
+                            
                             Text(location)
                                 .font(.callout)
                                 .fontDesign(.monospaced)

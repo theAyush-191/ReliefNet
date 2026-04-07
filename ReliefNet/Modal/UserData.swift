@@ -39,28 +39,27 @@ let sampleFeedbacks: [Feedback] = [
 
 // MARK: - Patient Model
 struct Patient: Identifiable {
-        var id = UUID()
-    var image: String = "profileImage"
+    var id : String
+    var imageURL: String = "profileImage"
         var name: String
         var email: String
         var age: Int
-        var gender: String
+        var gender: Gender
         var phone: String
-        var address: String
-        var totalBookings: Int
-
-    
+        var address: String?
+        var addressLat:Double?
+        var addressLong:Double?
 }
 
 struct patientData{
     static var samplePatient:Patient = Patient(
+        id:UUID().uuidString,
     name: "Ayush Singh",
             email: "ayush@example.com",
             age: 22,
-            gender: "Male",
-            phone:  "9876543210",
-            address: "Lucknow, India",
-            totalBookings: 5,
+        gender: .male,
+            phone:  "9876543210"
+
 
 )
 }

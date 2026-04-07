@@ -14,6 +14,7 @@ struct Review: Identifiable, Codable {
     var patientId: String
     
     var patientName: String
+    var bookingId: String
     var rating: Int        // 1 to 5
     var comment: String
     
@@ -22,46 +23,46 @@ struct Review: Identifiable, Codable {
 
 struct SampleReviews {
     
-    static let reviews: [Review] = [
+    static var reviews: [Review] = [
         
-        Review(
-            doctorId: "doc001",
-            patientId: "pat001",
-            patientName: "Rahul Sharma",
-            rating: 5,
-            comment: "Very professional and calm. Helped me understand my anxiety issues clearly."
-        ),
-        
-        Review(
-            doctorId: "doc001",
-            patientId: "pat002",
-            patientName: "Sneha Verma",
-            rating: 4,
-            comment: "Good session. Doctor listened patiently, but waiting time was a bit long."
-        ),
-        
-        Review(
-            doctorId: "doc001",
-            patientId: "pat003",
-            patientName: "Amit Singh",
-            rating: 5,
-            comment: "Highly recommended! I felt much better after just one consultation."
-        ),
-        
-        Review(
-            doctorId: "doc002",
-            patientId: "pat004",
-            patientName: "Neha Gupta",
-            rating: 3,
-            comment: "Average experience. Advice was helpful but felt a bit rushed."
-        ),
-        
-        Review(
-            doctorId: "doc002",
-            patientId: "pat005",
-            patientName: "Vikas Yadav",
-            rating: 4,
-            comment: "Good doctor, explained everything clearly."
-        )
+//        Review(
+//            doctorId: "doc001",
+//            patientId: "pat001",
+//            patientName: "Rahul Sharma",
+//            rating: 5,
+//            comment: "Very professional and calm. Helped me understand my anxiety issues clearly."
+//        ),
+//        
+//        Review(
+//            doctorId: "doc001",
+//            patientId: "pat002",
+//            patientName: "Sneha Verma",
+//            rating: 4,
+//            comment: "Good session. Doctor listened patiently, but waiting time was a bit long."
+//        ),
+//        
+//        Review(
+//            doctorId: "doc001",
+//            patientId: "pat003",
+//            patientName: "Amit Singh",
+//            rating: 5,
+//            comment: "Highly recommended! I felt much better after just one consultation."
+//        ),
+//        
+//        Review(
+//            doctorId: "doc002",
+//            patientId: "pat004",
+//            patientName: "Neha Gupta",
+//            rating: 3,
+//            comment: "Average experience. Advice was helpful but felt a bit rushed."
+//        ),
+//        
+//        Review(
+//            doctorId: "doc002",
+//            patientId: "pat005",
+//            patientName: "Vikas Yadav",
+//            rating: 4,
+//            comment: "Good doctor, explained everything clearly."
+//        )
     ]
 }

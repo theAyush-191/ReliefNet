@@ -28,22 +28,8 @@ struct PatientHomeView: View {
                 }
                 
             }
-            .tint(.purple).navigationBarBackButtonHidden(true).toolbar {
-                            // Custom Navigation Bar Items
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Text("ReliefNet")
-                                    .font(.system(size: 45, weight: .bold, design: .serif))
-                                    .foregroundColor(.primary)
-                                    .frame(width:240)
-                            }
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button(action:{/*isSidebarOpen = true*/ })
-                                {
-                                    Image(systemName: "line.3.horizontal")
-                                }
-                            }
-                        }.padding(.bottom,0).navigationBarTitleDisplayMode(.inline)
-//        }
+            .tint(.purple).navigationBarBackButtonHidden(true)
+            .padding(.bottom,0)
     }
 }
 

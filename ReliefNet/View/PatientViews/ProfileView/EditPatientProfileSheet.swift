@@ -8,80 +8,158 @@
 import SwiftUI
 
 struct EditPatientProfileSheet: View {
-    @Binding var data :Patient
     
+    @Binding var data: Patient
+    @State var name:String = ""
+    @State var age:Int = 0
+    @State var gender:Gender = .male
+    @State var number:String = ""
+    @State var address:String = ""
+    @State var lat : Double = 0.0
+    @State var long : Double = 0.0
     @Environment(\.dismiss) private var dismiss
     
-    
-    @State private var numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .none
-        return formatter
-    }()
-    
-    
     var body: some View {
-        NavigationStack {
+
             Form {
-                // MARK: - Basic Information
-                Section(header: Text("Basic Information").font(.headline)) {
-                    TextField("Enter Name", text: $data.name)
-                    TextField("Age (e.g. 8 )",value:  $data.age
-                              , formatter: numberFormatter
-                    )
-                        .keyboardType(.numberPad)
-                    
-//                    TextField("Age (e.g. 8 )",text:$data.age)
-                    
-                    Picker("Gender", selection: $data.gender) {
-                        Text("Male")
-                        Text("Female")
-                        Text("Others")
+                
+                // MARK: - Profile Image
+                Section {
+                    HStack {
+                        Spacer()
+                        
+                        Image(data.imageURL)
+                            .resizable()
+                            .frame(width: 90, height: 90)
+                            .clipShape(Circle())
+                        
+                        Spacer()
                     }
-                    
-                    TextField("Address", text: $data.address)
-                    
                 }
                 
-                // MARK: - About Section
-                Section(header: Text("Contact Information").font(.headline)) {
-                    TextField("Email (e.g. xyz@gmail.com)", text: $data.email)
-                        .keyboardType(.emailAddress)
-                    TextField("Age (e.g. 8 )",value:  $data.phone, formatter: numberFormatter)
+                // MARK: - Basic Info
+                Section("Basic Information") {
+                    
+                    TextField("Full Name", text: $name)
+                    
+                    TextField("Age", value: $age, format: .number)
                         .keyboardType(.numberPad)
                     
+                    Picker("Gender", selection: $gender) {
+                        ForEach(Gender.allCases, id: \.self) {
+                            Text($0.rawValue)
+                        }
+                    }
+                }
+                
+                // MARK: - Contact
+                Section("Contact Information") {
+                    
+                    TextField("Phone Number", text: $number)
+                        .keyboardType(.phonePad)
+                    
+                    // Email (Read Only)
+                    HStack {
+                        Text("Email")
+                        Spacer()
+                        Text(data.email)
+                            .foregroundColor(.gray)
+                            .font(.subheadline)
+                    }
+                }
+                
+                // MARK: - Address
+                Section("Address") {
+                    
+                    NavigationLink(
+                        destination: LocationView(
+                            addressText: $address,
+                            latitude: $lat,
+                            longitude: $long
+                        )
+                    ) {
+                        HStack(spacing: 12) {
+                            
+                            Image(systemName: "map.fill")
+                                .foregroundColor(.purple)
+                                .font(.title3)
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                
+                                Text("Location")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                
+                                Text(address.isEmpty ? "Tap to select location" : address)
+                                    .foregroundColor(address.isEmpty ? .gray : .primary)
+                                    .lineLimit(2)
+                            }
+                            
+                            Spacer()
+                        }
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(12)
+                    }
                 }
             }
-            .scrollContentBackground(.hidden)
-            .background(Color(.systemGroupedBackground))
             .navigationTitle("Edit Profile")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear{
+                name = data.name
+                age = data.age
+                gender = data.gender
+                number = data.phone
+                
+                if let add = data.address, let latitude = data.addressLat, let longitude = data.addressLong {
+                    address = add
+                    lat = latitude
+                    long  = longitude
+                }
+                
+            }
+            
+            // MARK: - Toolbar
             .toolbar {
+                
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         dismiss()
                     }
                 }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
+                        saveData()
                         dismiss()
                     }
                     .bold()
+                    .disabled(name.isEmpty || number.isEmpty)
                 }
             }
-        }
+//        }
+    }
+    
+    func saveData(){
+        data.name = name
+        data.age = age
+        data.gender = gender
+        data.phone = number
+        data.address = address.isEmpty ? nil : address
+        data.addressLat = lat
+        data.addressLong = long
     }
 }
 
 #Preview {
     EditPatientProfileSheet(data: .constant(Patient(
+        id: UUID().uuidString,
         name: "Ayush Singh",
         email: "ayush@example.com",
         age: 22,
-        gender: "Male",
+        gender: .male,
         phone: "9876543210",
-        address: "Lucknow, India",
-        totalBookings: 5,
-        
+        address: "Lucknow, India"
     )
     )
     )

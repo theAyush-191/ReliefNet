@@ -120,7 +120,7 @@ struct Sessions{
                                                       prescription:nil,
                                                       doctorNotes:nil,
                                                       followUpDate: nil,
-                                                      status: .requested
+                                                      status: .awaitingDoctor
                                                   ),
                                                   
                                                   DoctorSession(
@@ -139,7 +139,7 @@ struct Sessions{
                                                                                                           prescription:nil,
                                                                                                           doctorNotes:nil,
                                                       followUpDate: nil,
-                                                      status: .requested
+                                                      status: .awaitingDoctor
                                                   ),
                                                   
                                                   DoctorSession(
@@ -158,6 +158,6 @@ struct Sessions{
                                                                                                           prescription:nil,
                                                       doctorNotes:nil,
                                                       followUpDate: nil,
-                                                      status: .requested
+                                                      status: .awaitingDoctor
                                                   )]
 }

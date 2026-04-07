@@ -21,7 +21,7 @@ struct ChatListView: View {
                 PatientChat()
             }
         }
-        .navigationTitle("Chats")
+
         .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -296,7 +296,7 @@ struct BookingFormView: View {
                 doctorName: doctorData.name,
                 doctorSpeciality: doctorData.category.rawValue,
                 
-                patientId: patientData.samplePatient.id.uuidString,
+                patientId: patientData.samplePatient.id,
                 patientName: patientName,
                 patientAge: patientAge,
                 patientGender: patientGender,
@@ -324,7 +324,9 @@ struct BookingFormView: View {
                     isPaid: false
                 ),
                 
-                status: .requested
+                status: .awaitingDoctor,
+                
+                bookingCode: String(UUID().uuidString.prefix(6)).uppercased()
             )
         }
         

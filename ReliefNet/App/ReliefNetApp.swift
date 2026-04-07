@@ -43,10 +43,7 @@ struct ReliefNetApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack{
-//            LocationView()
-                RootView()
-            }.environmentObject(session)
+                RootView().environmentObject(session)
         }
     }
 }

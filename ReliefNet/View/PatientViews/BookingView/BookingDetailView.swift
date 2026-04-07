@@ -2,10 +2,12 @@ import SwiftUI
 
 struct BookingDetailView: View {
     @EnvironmentObject var session:UserSession
+    @Environment(\.dismiss) var dismiss 
     @Binding var booking: Appointment
     @State var doctors = Doctors.doctorsData
     @State var activeSheet:ActiveSheet?
     @State var isBooking:Bool = false
+    @State var navigateToBooking : Bool = false
     
     var body: some View {
         
@@ -43,7 +45,7 @@ struct BookingDetailView: View {
                 Divider()
                 
                 
-                // APPOINTMENT INFO
+                
                 // MARK: - APPOINTMENT INFO
                 VStack(alignment:.leading,spacing:10){
                     
@@ -129,9 +131,9 @@ struct BookingDetailView: View {
                 .frame(maxWidth:.infinity,alignment:.leading)
                 
                 
-                    Divider()
-                    
-                    // NOTES
+                Divider()
+                
+                // NOTES
                 if let note = booking.patientNotes{
                     VStack(alignment:.leading,spacing:6){
                         
@@ -146,6 +148,10 @@ struct BookingDetailView: View {
                     
                     Divider()
                 }
+                
+                
+                
+                
                 // CLINIC DETAILS
                 VStack(alignment:.leading,spacing:10){
                     
@@ -154,11 +160,11 @@ struct BookingDetailView: View {
                     
                     if booking.appointmentType == .online {
                         Text("This is an online consultation. Contact clinic for further details.")
-                                                    .foregroundColor(.gray)
-                                                    .frame(maxWidth: .infinity)
-                                                    .padding(12)
-                                                    .background(Color.gray.opacity(0.1))
-                                                    .cornerRadius(10)
+                            .foregroundColor(.gray)
+                            .frame(maxWidth: .infinity)
+                            .padding(12)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(10)
                     }else if let address = booking.appointmentAddress  {
                         DetailRow(icon:"mappin.and.ellipse",
                                   title:"Address",
@@ -183,33 +189,87 @@ struct BookingDetailView: View {
                               title:"Amount",
                               value:"₹\(booking.payment.amount)")
                     
-//                    DetailRow(icon:"wallet.pass",
-//                              title:"Method",
-//                              value:booking.pay)
+                    //                    DetailRow(icon:"wallet.pass",
+                    //                              title:"Method",
+                    //                              value:booking.pay)
                 }
                 
-                Divider()
                 
-               
-                    //Map View
-                    if booking.appointmentType != .online,
-                        let lat = booking.addressLat, let long = booking.addressLong{
-                            
-                            VStack(alignment:.leading,spacing:10){
-                                
-                                Text(booking.appointmentType == .home ? "Your Home" : "Clinic Location")
-                                    .font(.headline)
-                            
-                            MapView(doctorName: booking.appointmentType.mapTitle, lat: lat, long: long)
-                                .frame(height: 250)
-                                .cornerRadius(12)
-                        }
+                // MARK: - REVIEW DETAILS
+                if let review = SampleReviews.reviews.first(where: {$0.bookingId == booking.id.uuidString }) {
                     
-                }else {
-                    Text("Location not available")
+                    Divider()
+                    
+                    ReviewCardView(review:review)
+                }
+
+                // MARK: - CANCELLATION DETAILS
+                if let cancellation = booking.cancellation {
+                    Divider()
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+
+                        Text("Cancellation Details")
+                            .font(.headline)
+                            .foregroundColor(.red)
+
+                        VStack(alignment: .leading, spacing: 6) {
+
+                            Text("Cancelled By: \(cancellation.cancelledBy.rawValue)")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+
+                            Text("Reason: \(cancellation.reason)")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+
+                            Text("Cancelled At: \(cancellation.cancelledAt.formatted(date: .abbreviated, time: .shortened))")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        .padding()
+                        .background(Color.red.opacity(0.08))
+                        .cornerRadius(12)
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+                
+                if booking.status == .upcoming || booking.status == .completed { 
+                    Divider()
+                VStack(alignment: .leading, spacing: 10) {
+                    
+                    Text("Booking Code")
+                        .font(.headline)
+                    
+                    HStack {
+                        Text(booking.bookingCode)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.purple)
+                        
+                        Spacer()
+                        
+                        Button {
+                            UIPasteboard.general.string = booking.bookingCode
+                        } label: {
+                            Image(systemName: "doc.on.doc")
+                                .foregroundColor(.purple)
+                        }
+                    }
+                    .padding()
+                    .background(Color.purple.opacity(0.1))
+                    .cornerRadius(12)
+                    
+                    // Always visible description
+                    Text("At the start of your appointment, show this Booking Code to your doctor for verification.")
+                        .font(.caption)
                         .foregroundColor(.gray)
                 }
-                ActionButtonView(bookingData:$booking,isBooking: $isBooking,activeSheet:$activeSheet)
+            }
+                
+                //Map View
+                
+                ActionButtonView(bookingData:$booking,isBooking: $isBooking,activeSheet:$activeSheet, dismiss: $navigateToBooking)
                 
             }
             .padding()
@@ -217,13 +277,17 @@ struct BookingDetailView: View {
         .navigationTitle("Booking Details")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $activeSheet) { sheet in
-            BookingActionFlowView(type: sheet, bookingDetail: $booking).environmentObject(session)
+            BookingActionFlowView(type: sheet, bookingDetail: $booking,navigateToBooking: $navigateToBooking).environmentObject(session)
         }.navigationDestination(isPresented: $isBooking) {
             if let index = doctors.firstIndex(where: {$0.id == booking.doctorId}){
                 DoctorDetailView(data: $doctors[index])
                 
             }else {
                 Text("Doctor not found")
+            }
+        }.onChange(of: navigateToBooking) { oldValue, newValue in
+            if newValue == true {
+                dismiss()
             }
         }
     }
@@ -240,11 +304,49 @@ enum ActiveSheet:CaseIterable,Identifiable{
     }
 }
 
+
+struct ReviewCardView:View{
+    var review:Review
+    var body: some View {
+        
+        VStack(alignment: .leading, spacing: 10) {
+
+            Text("Your Review")
+                .font(.headline)
+
+            HStack {
+
+                ForEach(0..<5) { index in
+                    Image(systemName: index < review.rating ? "star.fill" : "star")
+                        .foregroundColor(.yellow)
+                }
+
+                Spacer()
+
+                Text(review.createdAt.formatted(date: .abbreviated, time: .shortened))
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+
+            Text(review.comment)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+                .padding(.top, 4)
+
+        }
+        .padding()
+        .background(Color.yellow.opacity(0.08))
+        .cornerRadius(12)
+    }
+    
+}
+
 struct ActionButtonView:View{
     
     @Binding var bookingData:Appointment
     @Binding var isBooking:Bool
     @Binding var activeSheet:ActiveSheet?
+    @Binding var dismiss:Bool
     
     @ViewBuilder
     var body : some View{
@@ -252,6 +354,8 @@ struct ActionButtonView:View{
         
 //        Group{
             switch bookingData.status {
+            
+
             case .awaitingPatient:
                 VStack(spacing: 10) {
                     
@@ -283,6 +387,23 @@ struct ActionButtonView:View{
             case .awaitingDoctor :
                 VStack(spacing: 10) {
                     
+                    HStack(spacing: 10) {
+                        
+                        BookingActionButton(
+                            title: "Reschedule",
+                            style: .accent
+                        ) {
+                            activeSheet = .reschedule
+                        }
+                        
+                        BookingActionButton(
+                            title: "Cancel Booking",
+                            style: .destructive
+                        ) {
+                            activeSheet = .cancel
+                        }
+                    }
+                    
                     BookingActionButton(
                         title: "Accept Booking",
                         style: .success
@@ -290,12 +411,6 @@ struct ActionButtonView:View{
                         acceptProposedTime()
                     }
                     
-                    BookingActionButton(
-                        title: "Cancel Booking",
-                        style: .destructive
-                    ) {
-                        activeSheet = .cancel
-                    }
                 }
             case .upcoming:
                 VStack(spacing: 10) {
@@ -348,73 +463,19 @@ struct ActionButtonView:View{
             default:
               EmptyView()
             }
-//        }
-//        .tint(.purple)
-//                .padding(.top,10)
-        
-        
-        
-        
-//        HStack(spacing:12){
-//            
-//            if bookingData.status == .completed {
-//                
-//                Button("Book Again") {}
-//                    .buttonStyle(.borderedProminent)
-//                
-//                Button("Leave Review") {}
-//                    .buttonStyle(.bordered)
-//                
-//                
-//            }else if bookingData.status == .cancelled{
-//                
-//                Button("Book Again") {}
-//                    .buttonStyle(.bordered)
-//                
-//            }
-//            else if bookingData.status == .upcoming {
-//                
-//                Button("Join Consultation") {}
-//                    .buttonStyle(.borderedProminent)
-//                
-//                Button("Cancel") {}
-//                    .buttonStyle(.bordered)
-//            }
-//            else if bookingData.status == .awaitingPatient{
-//                Button("Reschedule") {}
-//                    .buttonStyle(.bordered)
-//            }
-//        }
-//        .tint(.purple)
-//        .padding(.top,10)
+
     }
     
     func acceptProposedTime() {
         
         let lastDoctorProposal = bookingData.proposals.last { $0.proposedBy == .doctor }
-//        let lastPatientProposal = bookingData.proposals.last { $0.proposedBy == .patient }
-        
-//        var selectedProposal: TimeProposal?
-//        
-//        switch bookingData.status {
-//            
-//        case .awaitingPatient:
-//            // patient should accept doctor's proposal
-//            selectedProposal = lastDoctorProposal
-//            
-//        case .awaitingDoctor:
-//            // doctor should accept patient's proposal
-//            selectedProposal = lastPatientProposal
-//            
-//        default:
-//            return
-//        }
         
         guard let proposal = lastDoctorProposal else { return }
         
         bookingData.confirmedDateTime = proposal.dateTime
         bookingData.proposals.removeAll()
         bookingData.status = .upcoming
+        dismiss = true
     }
 }
 

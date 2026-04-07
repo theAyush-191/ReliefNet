@@ -1,93 +1,88 @@
-//
-//  MapView.swift
-//  ReliefNet
-//
-//  Created by Ayush Singh on 16/03/26.
-//
-
 import SwiftUI
 import MapKit
 
-//MARK: - Map View
-struct MapView:View{
-    let doctorName:String
-    let lat:Double
-    let long:Double
+struct MapView: View {
+    let doctorName: String
+    let lat: Double
+    let long: Double
     
-    var location : CLLocationCoordinate2D {
-        CLLocationCoordinate2DMake(lat, long)
+    var location: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: lat, longitude: long)
     }
     
-//    var yourLocation : CLLocationCoordinate2D {
-//        CLLocationCoordinate2DMake(26.888448, 81.055612)
-//    }
+    @State private var camera: MapCameraPosition = .automatic
+    @State private var isStandardMap: Bool = true
     
-    @State var camera : MapCameraPosition = .automatic
-    
-    @State var mapTypeStandard : Bool = false
-    
-    var body : some View{
-        VStack(alignment: .leading, spacing: 12) {
-
-            ZStack{
-                Map(position: $camera){
-                    Marker(doctorName, systemImage: "mappin", coordinate:location)
-                    
-//                    Marker("Ayush (You)",systemImage: "figure.wave", coordinate: yourLocation).tint(.blue)
-                    
-                }.safeAreaInset(edge: .top,alignment:.trailing){
-                    Button(action:{
-                        openInAppleMaps(lat: lat, long: long, placeName: doctorName)
-                    }){
-                        
-                            Image(systemName: "arrow.down.left.and.arrow.up.right")
-
-                    }.buttonStyle(.bordered).padding(10).tint(mapTypeStandard ? .blue : .white)
+    var body: some View {
+        Map(position: $camera) {
+            // Native Marker with a medical touch
+            Marker(doctorName, systemImage: "cross.case.fill", coordinate: location)
+                .tint(.purple)
+        }
+        .mapStyle(isStandardMap ? .standard(elevation: .realistic) : .imagery(elevation: .realistic))
+        .overlay(alignment: .top) {
+            // Top Gradient for readability
+            LinearGradient(colors: [.black.opacity(0.3), .clear], startPoint: .top, endPoint: .bottom)
+                .frame(height: 100)
+                .allowsHitTesting(false)
+        }
+        .safeAreaInset(edge: .bottom) {
+            // Floating Glassmorphism Control Center
+            HStack(spacing: 20) {
+                mapActionIcon(systemName: isStandardMap ? "globe.americas.fill" : "map.fill") {
+                    withAnimation(.spring()) { isStandardMap.toggle() }
                 }
-                .safeAreaInset(edge: .bottom,alignment: .leading) {
-                    HStack(spacing: 10){
-                        Button(action:{
-                            camera = .region(MKCoordinateRegion(center: location, latitudinalMeters: 200, longitudinalMeters: 200))
-                        }){
-                            
-                                Image(systemName: "building")
-                           
-                        }.buttonStyle(.bordered).padding(10).tint(mapTypeStandard ? .blue : .white)
-                        
-//                        Button(action:{
-//                            camera = .region(MKCoordinateRegion(center: yourLocation, latitudinalMeters: 200, longitudinalMeters: 200))
-//                        }){
-//                            
-//                                Image(systemName: "figure")
-//
-//                        }.buttonStyle(.bordered).padding(.trailing,10).tint(mapTypeStandard ? .blue : .white)
-                        
-                        Button(action:{
-                            mapTypeStandard.toggle()
-                        }){
-                            
-                                Image(systemName: "map")
-
-                        }.buttonStyle(.bordered).padding(.trailing,10).tint(mapTypeStandard ? .blue : .white)
-                        
+                
+                Button(action: openInAppleMaps) {
+                    HStack {
+                        Image(systemName: "arrow.triangle.turn.up.right.diamond.fill")
+                        Text("Directions")
+                            .fontWeight(.bold)
                     }
-                }.mapStyle(mapTypeStandard ? .standard : .imagery)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(Color.purple)
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
+                    .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+                }
+                
+                mapActionIcon(systemName: "scope") {
+                    withAnimation(.snappy) {
+                        camera = .region(MKCoordinateRegion(center: location, latitudinalMeters: 400, longitudinalMeters: 400))
+                    }
+                }
             }
-    }
-    .padding(.horizontal)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .background(.ultraThinMaterial)
+            .clipShape(Capsule())
+            .overlay(Capsule().stroke(.white.opacity(0.2), lineWidth: 1))
+            .padding(.bottom, 20)
+        }
+        .mapControls {
+            MapCompass()
+            MapPitchToggle()
+        }
+        .cornerRadius(24) // Softer corners for the card look
     }
     
-    func openInAppleMaps(lat:Double,long:Double, placeName:String){
-        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        let placemark = MKPlacemark(coordinate: coordinate)
-    
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = placeName
+    // Minimalist Circular Action Button
+    @ViewBuilder
+    func mapActionIcon(systemName: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: systemName)
+                .font(.system(size: 20))
+                .foregroundColor(.primary)
+                .frame(width: 44, height: 44)
+                .background(.white.opacity(0.5))
+                .clipShape(Circle())
+        }
+    }
+
+    func openInAppleMaps() {
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: location))
+        mapItem.name = doctorName
         mapItem.openInMaps()
     }
 }
-
-
-//#Preview {
-//    MapView(doctorName)
-//}

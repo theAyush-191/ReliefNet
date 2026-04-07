@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Appointment: Identifiable {
     
-    var id = UUID().uuidString
+    var id : UUID = UUID()
     
     // Doctor
     var doctorId: String
@@ -60,6 +60,8 @@ struct Appointment: Identifiable {
     
     var createdAt: Date = Date()
     
+    var bookingCode:String
+    
     // 🔥 Core logic
     var displayDateTime: Date {
         confirmedDateTime ?? proposals.last?.dateTime  ?? requestedDateTime
@@ -82,7 +84,7 @@ enum Gender : String, CaseIterable{
 
 enum SessionStatus: String, CaseIterable {
     
-    case requested = "Requested"
+//    case requested = "Requested"
     case upcoming = "Upcoming"
     case awaitingDoctor = "Awaiting Doctor"
     case awaitingPatient = "Awaiting Patient"
@@ -91,8 +93,8 @@ enum SessionStatus: String, CaseIterable {
     
     var color: Color {
         switch self {
-        case .requested:
-            return .orange
+//        case .requested:
+//            return .orange
         case .upcoming:
             return .blue
         case .awaitingDoctor:
@@ -167,7 +169,7 @@ struct Appoint{
             
             // MARK: 1. Online - Awaiting Patient (Doctor proposed time)
             Appointment(
-                doctorId: "doc1",
+                doctorId: "doc01",
                 doctorName: "Dr. Rahul Verma",
                 doctorSpeciality: "Therapist",
                 
@@ -194,7 +196,7 @@ struct Appoint{
                 
                 payment: PaymentData(amount: 500, method: .payAtVisit),
                 
-                status: .awaitingPatient
+                status: .awaitingPatient, bookingCode: "592004"
             ),
             
             // MARK: 2. Clinic - Awaiting Doctor (Patient proposed again)
@@ -229,7 +231,7 @@ struct Appoint{
                 
                 payment: PaymentData(amount: 600, method: .payAtVisit),
                 
-                status: .awaitingDoctor
+                status: .awaitingDoctor, bookingCode: "892939"
             ),
             
             // MARK: 3. Home Visit - Upcoming (Confirmed)
@@ -261,7 +263,7 @@ struct Appoint{
                 
                 payment: PaymentData(amount: 800, method: .payAtVisit),
                 
-                status: .upcoming
+                status: .upcoming, bookingCode: "432432"
             ),
             
             // MARK: 4. Online - Completed
@@ -291,7 +293,7 @@ struct Appoint{
                 
                 payment: PaymentData(amount: 400, method: .payAtVisit),
                 
-                status: .completed
+                status: .completed, bookingCode: "235235"
             ),
             
             // MARK: 5. Clinic - Cancelled
@@ -329,7 +331,7 @@ struct Appoint{
                     cancelledBy: .patient,
                     reason: "Feeling better",
                     cancelledAt: now
-                )
+                ), bookingCode: "523525"
             )
         ]
     }

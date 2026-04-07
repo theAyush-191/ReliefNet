@@ -153,7 +153,7 @@ struct AppointmentDetailView: View {
                 
                 VStack(spacing: 12) {
                     
-                    if session.status == .requested {
+                    if session.status == .awaitingDoctor {
                         Button("Accept") {
                             //                            showAcceptSheet = true
                             session.confirmedDateTime = session.proposedDateTime ?? session.requestedDateTime

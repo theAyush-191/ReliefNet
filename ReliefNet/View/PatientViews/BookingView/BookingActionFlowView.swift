@@ -10,146 +10,210 @@ import SwiftUI
 struct BookingActionFlowView: View {
     var type : ActiveSheet?
     @Binding var bookingDetail : Appointment
+    @Binding var navigateToBooking : Bool
     var body: some View {
         switch type{
         case .cancel:
-            CancelBookingView(booking: $bookingDetail)
+            CancelBookingView(booking: $bookingDetail, navigateToBooking: $navigateToBooking)
         case .join:
             JoinConsultaionBookingView(detail: $bookingDetail)
         case .reschedule:
             // In Combine Views Folder
             RescheduleBookingView(detail: $bookingDetail)
         case .review:
-            ReviewBookingView(booking: $bookingDetail)
+            ReviewBookingView(booking: $bookingDetail, navigateToBooking: $navigateToBooking)
         default : EmptyView()
         }
     }
 }
 
-struct JoinConsultaionBookingView : View {
-    @Binding var detail : Appointment
+struct JoinConsultaionBookingView: View {
+    @Binding var detail: Appointment
     
     var screenTitle: String {
         switch detail.appointmentType {
-        case .online:
-            return "Join Consultation"
-        case .clinic:
-            return "Get Directions"
-        case .home:
-            return "Home Visit Details"
+        case .online: return "Join Consultation"
+        case .clinic: return "Get Directions"
+        case .home: return "Home Visit Details"
         }
     }
-    var body : some View{
-        VStack(spacing: 20) {
-                    
-                    // MARK: Title
+    
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                
+                // MARK: - TOP INFO CARD
+                VStack(spacing: 0) {
                     Text(screenTitle)
-                        .font(.title2)
-                        .fontWeight(.bold)
+                        .font(.headline)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.purple.opacity(0.1))
+                        .foregroundColor(.purple)
                     
-                    // MARK: Content Based on Type
-                    if detail.appointmentType == .online {
-                        
-                        onlineView
-                        
-                    } else if detail.appointmentType == .clinic {
-                        
-                        clinicView
-                        
-                    } else if detail.appointmentType == .home {
-                        
-                        homeView
+                    Group {
+                        if detail.appointmentType == .online {
+                            onlineView
+                        } else if detail.appointmentType == .clinic {
+                            clinicView
+                        } else if detail.appointmentType == .home {
+                            homeView
+                        }
                     }
-                    
-                    Spacer()
+                    .padding(.vertical, 20)
+                    .padding(.horizontal, 16)
                 }
-                .padding()
-                .navigationTitle("Appointment")
-                .navigationBarTitleDisplayMode(.inline)
+                .background(Color(.secondarySystemGroupedBackground))
+                .cornerRadius(16)
+                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)
+                
+                // MARK: - MAP SECTION
+                if detail.appointmentType != .online {
+                    if let lat = detail.addressLat, let long = detail.addressLong {
+                        VStack(alignment: .leading, spacing: 16) {
+                            
+                            // Section Header
+                            HStack(spacing: 12) {
+                                Image(systemName: detail.appointmentType == .home ? "house.fill" : "building.2.fill")
+                                    .foregroundColor(.purple)
+                                    .font(.system(size: 14, weight: .bold))
+                                    .padding(8)
+                                    .background(Color.purple.opacity(0.1))
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(detail.appointmentType == .home ? "Your Home" : "Clinic Location")
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
+                                    Text(detail.appointmentType == .home ? "Doctor will arrive here" : "Navigate to this address")
+                                        .font(.caption2)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            .padding(.horizontal, 4)
+
+                            MapView(doctorName: detail.appointmentType.mapTitle, lat: lat, long: long)
+                                .frame(height: 400) // 400 is usually the sweet spot for detail maps
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.gray.opacity(0.1), lineWidth: 1)
+                                )
+                        }
+                    } else {
+                        ContentUnavailableView("Location Unavailable", systemImage: "map.badge.xmark", description: Text("Coordinate data is missing for this booking."))
+                    }
+                }
+                
+                Spacer(minLength: 40)
+            }
+            .padding()
+        }
+        .background(Color(.systemGroupedBackground).ignoresSafeArea())
+        .navigationTitle("Appointment")
+        .navigationBarTitleDisplayMode(.inline)
     }
+
+    // MARK: - Subviews (Kept clean)
     
     var onlineView: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 12) {
+            Image(systemName: "video.circle.fill")
+                .font(.system(size: 60))
+                .foregroundStyle(.purple.gradient)
             
-            Image(systemName: "video.fill")
-                .font(.system(size: 50))
-                .foregroundColor(.purple)
-            
-            Text("Your consultation will start at:")
-                .font(.headline)
-            
-            Text(detail.displayDateTime.formatted(date: .abbreviated, time: .shortened))
-                .font(.title3)
-                .bold()
+            VStack(spacing: 4) {
+                Text("Scheduled for")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Text(detail.displayDateTime.formatted(date: .abbreviated, time: .shortened))
+                    .font(.title3)
+                    .bold()
+            }
             
             Text("Doctor will contact you via phone or video call.")
+                .font(.footnote)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
             
-            Button("Call Doctor") {
-                callDoctor()
+            Button(action: callDoctor) {
+                Label("Call Clinic", systemImage: "phone.fill")
+                    .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
+            .tint(.purple)
+            .padding(.top, 8)
         }
     }
     
     var clinicView: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 12) {
+            Image(systemName: "mappin.and.ellipse.circle.fill")
+                .font(.system(size: 60))
+                .foregroundStyle(.blue.gradient)
             
-            Image(systemName: "mappin.and.ellipse")
-                .font(.system(size: 50))
-                .foregroundColor(.blue)
-            
-            Text("Visit Clinic At")
-                .font(.headline)
-            
-            Text(detail.appointmentAddress ?? "Address not available")
-                .multilineTextAlignment(.center)
-            
-            Button("Open in Maps") {
-                openMaps()
+            VStack(spacing: 4) {
+                Text("Clinic Address")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Text(detail.appointmentAddress ?? "Address not available")
+                    .font(.body)
+                    .fontWeight(.medium)
+                    .multilineTextAlignment(.center)
             }
-            .buttonStyle(.borderedProminent)
+            
+            Button(action: openMaps) {
+                Label("Open in Maps", systemImage: "location.fill")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
         }
     }
     
     var homeView: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 12) {
+            Image(systemName: "house.circle.fill")
+                .font(.system(size: 60))
+                .foregroundStyle(.green.gradient)
             
-            Image(systemName: "house.fill")
-                .font(.system(size: 50))
-                .foregroundColor(.green)
+            VStack(spacing: 8) {
+                Text("Doctor visiting your location")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                
+                Text(detail.appointmentAddress ?? "Not available")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
             
-            Text("Doctor will visit your location")
-                .font(.headline)
+            Divider().padding(.horizontal)
             
-            Text("Address:")
-            
-            Text(detail.appointmentAddress ?? "Not available")
-                .multilineTextAlignment(.center)
-            
-            Text("Expected Time:")
-            
-            Text(detail.displayDateTime.formatted(date: .abbreviated, time: .shortened))
-                .bold()
+            HStack {
+                Text("Expected Arrival:")
+                    .font(.caption)
+                Text(detail.displayDateTime.formatted(date: .omitted, time: .shortened))
+                    .font(.caption)
+                    .bold()
+            }
+            .foregroundColor(.purple)
         }
     }
-    
+
+    // MARK: - Helpers
     func callDoctor() {
-        if let url = URL(string: "tel://\(detail.clinicPhone)") {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    func openMaps() {
-        guard let lat = detail.addressLat,
-              let long = detail.addressLong else { return }
-        
-        let url = URL(string: "http://maps.apple.com/?ll=\(lat),\(long)")!
-        UIApplication.shared.open(url)
-    }
-    
-    
+           if let url = URL(string: "tel://\(detail.clinicPhone)") {
+               UIApplication.shared.open(url)
+           }
+       }
+       
+       func openMaps() {
+           guard let lat = detail.addressLat,
+                 let long = detail.addressLong else { return }
+           
+           let url = URL(string: "http://maps.apple.com/?ll=\(lat),\(long)")!
+           UIApplication.shared.open(url)
+       }
 }
 
 
@@ -157,6 +221,7 @@ struct CancelBookingView: View {
     
     @Binding var booking: Appointment
     @Environment(\.dismiss) var dismiss
+    @Binding var navigateToBooking : Bool
     
     // MARK: - State
     @State private var selectedReason: String = ""
@@ -296,6 +361,7 @@ struct CancelBookingView: View {
             }
             
             isCancelling = false
+            navigateToBooking = true
             dismiss()
         }
     }
@@ -306,6 +372,7 @@ struct ReviewBookingView: View {
     
     @Binding var booking: Appointment
     @Environment(\.dismiss) var dismiss
+    @Binding var navigateToBooking : Bool
     
     // MARK: - State
     @State private var rating: Int = 0
@@ -424,22 +491,29 @@ struct ReviewBookingView: View {
         isSubmitting = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            
+            let id = booking.id
             let review = Review(
                 id: UUID().uuidString,
                 doctorId: booking.doctorId,
                 patientId: booking.patientId,
                 patientName: booking.patientName,
+                bookingId: id.uuidString,
                 rating: rating,
                 comment: reviewText,
                 createdAt: Date()
             )
             
+            if let index = SampleReviews.reviews.firstIndex(where: {$0.bookingId == id.uuidString}){
+                SampleReviews.reviews[index] = review
+            }else{
+                SampleReviews.reviews.append(review)
+            }
             print("Review Submitted:", review)
             
             // TODO: Send to Firebase
             
             isSubmitting = false
+//            navigateToBooking = true
             dismiss()
         }
     }

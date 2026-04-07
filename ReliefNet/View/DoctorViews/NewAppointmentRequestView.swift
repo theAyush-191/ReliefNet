@@ -19,13 +19,13 @@ struct NewAppointmentsView: View {
         ScrollView {
             VStack(spacing: 12) {
                 
-                if $sessions.filter({ $0.wrappedValue.status == .requested }).isEmpty {
+                if $sessions.filter({ $0.wrappedValue.status == .awaitingDoctor }).isEmpty {
                     Text("No new appointment requests")
                         .foregroundColor(.gray)
                         .padding(.top, 40)
                 }
                 
-                ForEach($sessions.filter { $0.wrappedValue.status == .requested }) { $session in
+                ForEach($sessions.filter { $0.wrappedValue.status == .awaitingDoctor }) { $session in
                     NavigationLink(destination: AppointmentDetailView(session: $session)){
                         RequestCard(session: $session)
                     }
